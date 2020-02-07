@@ -161,16 +161,10 @@ static BreakpadRef InitBreakpad() {
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification {
   key_tap_ = [[SPMediaKeyTap alloc] initWithDelegate:self];
-  if ([SPMediaKeyTap usesGlobalMediaKeyTap] &&
-      ![[NSProcessInfo processInfo]
-          isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){
-                                              .majorVersion = 10,
-                                              .minorVersion = 12,
-                                              .patchVersion = 0}]) {
+  if ([SPMediaKeyTap usesGlobalMediaKeyTap])
     [key_tap_ startWatchingMediaKeys];
-  } else {
+  else
     qLog(Warning) << "Media key monitoring disabled";
-  }
 }
 
 - (BOOL)application:(NSApplication*)app openFile:(NSString*)filename {
